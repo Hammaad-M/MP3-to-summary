@@ -62,11 +62,11 @@ with open(transcript_file, 'r', encoding='utf-8') as input_file:
     with open(summary_file, 'w', encoding='utf-8') as output_file:
         text = input_file.read()  # Read input text
         summarizer = pipeline("summarization", model="facebook/bart-large-cnn")  # Initialize summarizer model
-        text = [text[i:i+1200] for i in range(0, len(text), 1200)]  # Break text into chunks of 1200 characters
+        text = [text[i:i+2800] for i in range(0, len(text), 2800)]  # Break text into chunks of 1200 characters
 
         for chunk in tqdm(text, desc="Summarizing transcript chunks", unit="chunks"):  # Iterate over text chunks
             print(min(500, len(chunk)))
-            summary = summarizer(chunk, max_length=min(250, len(chunk)), min_length=10, do_sample=True)  # Summarize each chunk, max_length is for the summary output
+            summary = summarizer(chunk, max_length=min(350, len(chunk)), min_length=10, do_sample=True)  # Summarize each chunk, max_length is for the summary output
             output_file.write(summary[0]['summary_text'] + "\n") 
 
 print("\nSummary saved to", summary_file)
