@@ -18,16 +18,14 @@ if sr != 16000:
     sr = 16000
 
 
-chunk_duration = 30  # seconds
-stride_duration = 1  # seconds (overlap between chunks)
+chunk_duration = 28  # seconds
 chunk_size = chunk_duration * sr
-stride_size = stride_duration * sr
 
 # Open the text file for writing
 with open("transcription.txt", "w") as f:
     # Process the audio in chunks and transcribe
-    with tqdm(total=len(audio) // stride_size + 1, desc="Processing chunks") as pbar:
-        for i, start in enumerate(range(0, len(audio), chunk_size - stride_size), 1):
+    with tqdm(total=(len(audio) // chunk_size ) + 1, desc="Processing chunks") as pbar:
+        for i, start in enumerate(range(0, len(audio), chunk_size), 0):
             end = min(start + chunk_size, len(audio))
             audio_chunk = audio[start:end]
 
